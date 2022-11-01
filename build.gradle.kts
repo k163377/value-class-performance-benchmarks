@@ -2,7 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.20"
-    application
+    kotlin("plugin.allopen") version "1.7.20"
+    id("me.champeau.gradle.jmh") version "0.5.3"
+}
+
+allOpen {
+    annotation("org.openjdk.jmh.annotations.State")
 }
 
 group = "org.wrongwrong"
@@ -13,7 +18,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect
+    jmhImplementation("org.jetbrains.kotlin:kotlin-reflect:1.7.20")
 }
 
 tasks.test {
@@ -24,6 +30,19 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-application {
-    mainClass.set("MainKt")
+jmh {
+    warmupForks = 2
+    warmupBatchSize = 3
+    warmupIterations = 3
+    warmup = "1s"
+
+    fork = 2
+    batchSize = 3
+    iterations = 2
+    timeOnIteration = "1500ms"
+
+    failOnError = true
+    isIncludeTests = false
+
+    resultFormat = "CSV"
 }
