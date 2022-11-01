@@ -17,11 +17,11 @@ import kotlin.reflect.KParameter
 class DeserializeBenchmark {
     private val dataConstructor: KFunction<Data> = ::Data
     private val dataParam: KParameter = dataConstructor.parameters.single()
-    private val valueConstructor: KFunction<Value> = ::Value
-    private val valueParam: KParameter = valueConstructor.parameters.single()
-
     private val dataWrapperConstructor: KFunction<DataWrapper> = ::DataWrapper
     private val dataWrapperParam: KParameter = dataWrapperConstructor.parameters.single()
+
+    private val valueConstructor: KFunction<Value> = ::Value
+    private val valueParam: KParameter = valueConstructor.parameters.single()
     private val valueWrapperConstructor: KFunction<ValueWrapper> = ::ValueWrapper
     private val valueWrapperParam: KParameter = valueWrapperConstructor.parameters.single()
 
